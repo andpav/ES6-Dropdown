@@ -1,5 +1,9 @@
-if (process.env.NODE_ENV === 'development') {
-  require('../index.html');
-}
 import './css/styles.css';
-import './css/styles2.css';
+import Dropdown from './Dropdown/index';
+
+let container = document.createElement('div');
+
+container.className = 'container';
+container.appendChild((new Dropdown).render());
+
+document.body.appendChild(container);
