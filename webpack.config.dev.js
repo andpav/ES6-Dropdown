@@ -1,6 +1,11 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+const extractStyles = new ExtractTextPlugin({
+  filename: 'styles/[name].[contenthash].css',
+  allChunks: true,
+});
+
 module.exports = {
   module: {
     rules: [
@@ -21,7 +26,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
+        use: extractStyles.extract({
           fallback: "style-loader",
           use: "css-loader"
         })
