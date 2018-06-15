@@ -18,3 +18,11 @@
 .dropdown__list_shown {
   display: block;
 }
+
+.list-item {
+  opacity: 0.5;
+}
+
+.list-item_selected {
+  opacity: 1;
+}
