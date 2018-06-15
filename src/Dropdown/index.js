@@ -3,12 +3,14 @@ import '../css/styles.css';
 export default class Dropdown {
   constructor(items) {
     this.items = items;
-    this.activeClass = 'dropdown_active';
 
     this.node = document.createElement('div');
     this.node.className = 'dropdown';
 
     this.input = document.createElement('input');
+
+    this.list = document.createElement('div');
+    this.list.className = 'dropdown__list';
 
     // this.initEventHandlers();
     this.add = this.add.bind(this);
@@ -57,15 +59,17 @@ export default class Dropdown {
 
   handleOutsideClick(e) {
     if (!this.node.contains(e.target)) {
-      this.node.classList.remove('dropdown_active')
+      this.list.classList.remove('dropdown__list_shown')
     }
   }
 
   render() {
     this.input.type = 'text';
-    this.input.onclick = () => this.node.classList.add('dropdown_active');
+    this.input.className = 'dropdown__input';
+    this.input.onclick = () => this.list.classList.add('dropdown__list_shown');
 
     this.node.appendChild(this.input)
+    this.node.appendChild(this.list)
 
     return this.node;
   }
