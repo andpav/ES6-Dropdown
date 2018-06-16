@@ -33,11 +33,12 @@ export class ListItem {
 
 export default class Dropdown {
   constructor(items, autoComplete, multiSelect, useServer, showPhoto) {
-    this.items = items;
     this.autoComplete = autoComplete;
     this.multiSelect = multiSelect;
     this.showPhoto = showPhoto;
     this.selectedItem = null;
+
+    this.store = {};
 
     this.node = document.createElement('div');
     this.node.className = 'dropdown';
@@ -45,16 +46,42 @@ export default class Dropdown {
     this.input = document.createElement('input');
 
     this.render = this.render.bind(this);
+    this.reRenderList = this.reRenderList.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.selectItem = this.selectItem.bind(this);
+    this.setItemsToStore = this.setItemsToStore.bind(this);
+    this.filterItems = this.filterItems.bind(this);
 
+    this.setItemsToStore(items);
+
+    document.addEventListener('input', this.filterItems, false);
     document.addEventListener('click', this.handleOutsideClick, false);
+
+    this.render(items);
+  }
+
+  addItemsToStore(items) {
+    this.store.items = Object.assign({}, this.store.items, items);
+
+    this.reRenderList(items);
+  }
+
+  setItemsToStore(items) {
+    this.store.items = items;
+
+    this.reRenderList(items);
   }
 
   selectItem(id) {
     this.selectedItem = id;
 
-    this.render();
+    this.reRenderList(this.store.items);
+  }
+
+  filterItems(e) {
+    const filteredItems = this.store.items.filter(item => ~item.name.indexOf(e.target.value));
+
+    this.reRenderList(filteredItems);
   }
 
   handleOutsideClick(e) {
@@ -63,14 +90,35 @@ export default class Dropdown {
     }
   }
 
-  render() {
-    if (this.list) {
-      this.node.removeChild(this.list);
+  reRenderList(items) {
+    if (!this.list) {
+      return;
     }
 
+    while(this.list.firstChild) {
+      this.list.removeChild(this.list.firstChild);
+    }
+
+    const showingItems = items || this.store.items;
+
+    showingItems.map(item => {
+      const wrapper = document.createElement('div');
+
+      wrapper.appendChild((new ListItem(item.id, item.name, item.photo, this.showPhoto, this.multiSelect, item.id === this.selectedItem, this.selectItem)).render());
+
+      this.list.appendChild(wrapper);
+    });
+
+    this.node.appendChild(this.list);
+  }
+
+  render(items) {
     this.input.type = 'text';
     this.input.className = 'dropdown__input';
-    this.input.onclick = () => this.list.classList.add('dropdown__list_shown');
+
+    if (this.list) {
+      this.input.onclick = () => this.list.classList.add('dropdown__list_shown');
+    }
 
     /*
     * Решение прокидывать знание о мультиселектности в сами айтемы у меня вызывает боль.
@@ -80,7 +128,10 @@ export default class Dropdown {
 
     this.list = document.createElement('div');
     this.list.className = 'dropdown__list';
-    this.items.map(item => {
+
+    const showingItems = items || this.store.items;
+
+    showingItems.map(item => {
       const wrapper = document.createElement('div');
 
       wrapper.appendChild((new ListItem(item.id, item.name, item.photo, this.showPhoto, this.multiSelect, item.id === this.selectedItem, this.selectItem)).render());
