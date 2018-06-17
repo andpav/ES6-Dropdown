@@ -1,5 +1,6 @@
 import '../css/styles.css';
-import { findMatch } from '../utils.js';
+import { findMatch, getData } from '../utils.js';
+import {parseBody} from "../utils";
 
 export class ListItem {
   constructor(id, name, photo, showPhoto, multiSelect, isSelected, selectItem) {
@@ -36,10 +37,11 @@ export default class Dropdown {
   constructor(items, autoComplete, multiSelect, useServer, showPhoto) {
     this.autoComplete = autoComplete;
     this.multiSelect = multiSelect;
+    this.useServer = useServer;
     this.showPhoto = showPhoto;
     this.selectedItem = null;
 
-    this.store = {};
+    this.store = { isRequestPending : false };
 
     this.node = document.createElement('div');
     this.node.className = 'dropdown';
@@ -50,6 +52,7 @@ export default class Dropdown {
     this.reRenderList = this.reRenderList.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.selectItem = this.selectItem.bind(this);
+    this.addItemsToStore = this.addItemsToStore.bind(this);
     this.setItemsToStore = this.setItemsToStore.bind(this);
     this.filterItems = this.filterItems.bind(this);
 
@@ -62,9 +65,9 @@ export default class Dropdown {
   }
 
   addItemsToStore(items) {
-    this.store.items = Object.assign({}, this.store.items, items);
-
-    this.reRenderList(items);
+    if (items && items.length) {
+      this.reRenderList(this.showingItems.concat(items));
+    }
   }
 
   setItemsToStore(items) {
@@ -89,6 +92,15 @@ export default class Dropdown {
     const filteredItems = findMatch(this.store.items, e.target.value);
 
     this.reRenderList(filteredItems);
+
+    if (this.useServer && !this.store.isRequestPending) {
+      this.store.isRequestPending = true;
+
+      getData(e.target.value).then(serverItems => {
+        this.store.isRequestPending = false;
+        return serverItems ? this.addItemsToStore(serverItems) : null
+      });
+    }
   }
 
   handleOutsideClick(e) {
@@ -106,9 +118,9 @@ export default class Dropdown {
       this.list.removeChild(this.list.firstChild);
     }
 
-    const showingItems = items || this.store.items;
+    this.showingItems = items || this.store.items;
 
-    showingItems.map(item => {
+    this.showingItems.map(item => {
       const wrapper = document.createElement('div');
 
       wrapper.appendChild((new ListItem(item.id, item.name, item.photo, this.showPhoto, this.multiSelect, item.id === this.selectedItem, this.selectItem)).render());
@@ -136,9 +148,9 @@ export default class Dropdown {
     this.list = document.createElement('div');
     this.list.className = 'dropdown__list';
 
-    const showingItems = items || this.store.items;
+    this.showingItems = items || this.store.items;
 
-    showingItems.map(item => {
+    this.showingItems.map(item => {
       const wrapper = document.createElement('div');
 
       wrapper.appendChild((new ListItem(item.id, item.name, item.photo, this.showPhoto, this.multiSelect, item.id === this.selectedItem, this.selectItem)).render());

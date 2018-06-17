@@ -3,7 +3,6 @@ import Dropdown from './Dropdown/index';
 
 let container = document.createElement('div');
 
-
 const items = [
   {
     id : '1',
@@ -29,7 +28,7 @@ const items = [
 
 const autoComplete = false;
 const multiSelect = false;
-const useServer = false;
+const useServer = true;
 const showPhoto = false;
 
 container.className = 'container';

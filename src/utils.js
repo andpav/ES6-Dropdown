@@ -1,3 +1,4 @@
+/* find matches for dropdown filter */
 
 // ex.: sinits -> ьштшеы
 const enToRuKeyboardTranslator = {
@@ -63,4 +64,34 @@ export const findMatch = (array, text) => {
   const haveRuSymbols = /[а-я]/i.test(text);
 
   return haveRuSymbols ? findMatchRuCase(array, text) : findMatchEnCase(array, text);
+}
+
+export const parseBody = (data) => {
+  if (typeof data === 'string') {
+    return null;
+  }
+
+  return data;
+};
+
+/* api methods */
+
+const parseResponse = (data) => {
+  const httpCode = data.status;
+
+  if (httpCode < 200 || httpCode >= 300 || httpCode === 204) {
+    return null;
+  }
+
+  return data.json();
+};
+
+const request = (url, method) => {
+  return fetch(url, { method })
+    .then(response => parseResponse(response))
+    .then(body => (body ? parseBody(body) : null));
+};
+
+export const getData = (text) => {
+  return request(`http://localhost:3000/data?text=${text}`, 'GET');
 }
