@@ -1,4 +1,5 @@
 import '../css/styles.css';
+import { findMatch } from '../utils.js';
 
 export class ListItem {
   constructor(id, name, photo, showPhoto, multiSelect, isSelected, selectItem) {
@@ -79,39 +80,13 @@ export default class Dropdown {
   }
 
   filterItems(e) {
-    // ex.: sinits -> ьштшеы
-    const enToRuKeyboardtranslator = {
-      'q':'й', 'w':'ц', 'e':'у', 'r':'к', 't':'е', 'y':'н', 'u':'г',
-      'i':'ш', 'o':'щ', 'p':'з', '[':'х', ']':'ъ', 'a':'ф', 's':'ы',
-      'd':'в', 'f':'а', 'g':'п', 'h':'р', 'j':'о', 'k':'л', 'l':'д',
-      ';':'ж', '\'':'э', '\\':'ё', 'z':'я', 'x':'ч', 'c':'с', 'v':'м', 'b':'и',
-      'n':'т', 'm':'ь', ',':'б', '.':'ю',
-  };
+    if (!e.target.value) {
+      this.reRenderList(this.store.items);
 
-    // ex.: синиц -> cbybw
-    const ruToEnKeyboardtranslator = {
-      'й':'q', 'ц':'w', 'у':'e', 'к':'r', 'е':'t', 'н':'y', 'г':'u',
-      'ш':'i', 'щ':'o', 'з':'p', 'х':'[', 'ъ':']', 'ф':'a', 'ы':'s',
-      'в':'d', 'а':'f', 'п':'g', 'р':'h', 'о':'j', 'л':'k', 'д':'l',
-      'ж':';', 'э':'\'', 'ё':'//', 'я':'z', 'ч':'x', 'с':'c', 'м':'v', 'и':'b',
-      'т':'n', 'ь':'m', 'б':',', 'ю':'.',
-    };
+      return;
+    }
 
-    // sinits -> синиц
-    const enToRuPronounceTranslator = {
-      'a': 'а', 'b': 'б', 'c': 'к', 'd': 'д', 'e': 'и', 'f': 'ф', 'g': 'г', 'h': 'х', 'i': 'и', 'j': 'дж', 'k': 'к',
-      'l': 'л', 'm': 'м', 'n': 'н', 'o': 'о', 'p': 'п', 'q': 'к', 'r': 'р', 's': 'с', 't': 'т', 'u': 'у', 'v': 'в',
-      'w': 'в', 'x': 'кс', 'y': 'a', 'z': 'з',
-    };
-
-    // синиц -> sinits
-    const ruToEnPronounceTranslator = {
-      'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'e', 'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'i',
-      'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f',
-      'х': 'h', 'ц': 'ts', 'ч': 'tch', 'ш': 'sh', 'щ': 'sch', 'ъ': '', 'ы': 'i', 'ь': '', 'э': 'e', 'ю': 'iy', 'я': 'ia',
-    };
-
-    const filteredItems = this.store.items.filter(item => ~item.name.indexOf(e.target.value));
+    const filteredItems = findMatch(this.store.items, e.target.value);
 
     this.reRenderList(filteredItems);
   }

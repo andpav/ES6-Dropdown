@@ -20,6 +20,11 @@ const items = [
     name : 'Boris the Blade',
     photo : '...',
   },
+  {
+    id : '4',
+    name : 'Andrey Rogozov',
+    photo : '...',
+  },
 ];
 
 const autoComplete = false;
