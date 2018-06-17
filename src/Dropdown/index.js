@@ -1,6 +1,5 @@
 import '../css/styles.css';
 import { findMatch, getData } from '../utils.js';
-import {parseBody} from "../utils";
 
 export class ListItem {
   constructor(id, name, photo, showPhoto, multiSelect, isSelected, selectItem) {
@@ -41,7 +40,7 @@ export default class Dropdown {
     this.showPhoto = showPhoto;
     this.selectedItem = null;
 
-    this.store = { isRequestPending : false };
+    this.store = { pendingsRequestsCount : 0 };
 
     this.node = document.createElement('div');
     this.node.className = 'dropdown';
@@ -83,22 +82,18 @@ export default class Dropdown {
   }
 
   filterItems(e) {
-    if (!e.target.value) {
-      this.reRenderList(this.store.items);
-
-      return;
-    }
-
-    const filteredItems = findMatch(this.store.items, e.target.value);
+    const filteredItems = e.target.value ? findMatch(this.store.items, e.target.value) : this.store.items;
 
     this.reRenderList(filteredItems);
 
-    if (this.useServer && !this.store.isRequestPending) {
-      this.store.isRequestPending = true;
+    if (this.useServer) {
+      this.store.pendingsRequestsCount ++;
 
       getData(e.target.value).then(serverItems => {
-        this.store.isRequestPending = false;
-        return serverItems ? this.addItemsToStore(serverItems) : null
+        this.store.pendingsRequestsCount --;
+
+        /* так как мы не можем абортить промисы, просто не сэтим данные из устаревших */
+        return serverItems && !this.store.pendingsRequestsCount ? this.addItemsToStore(serverItems) : null
       });
     }
   }
