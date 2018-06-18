@@ -2,6 +2,7 @@ import './css/styles.css';
 import Dropdown from './Dropdown/index';
 
 let container = document.createElement('div');
+container.className = 'container';
 
 const items = [
   {
@@ -26,12 +27,11 @@ const items = [
   },
 ];
 
-const autoComplete = false;
-const multiSelect = false;
-const useServer = true;
-const showPhoto = true;
+const placeHolder1 = 'autoComplete = true, multiSelect = false, useServer = true, showPhoto = true';
+container.appendChild((new Dropdown(items, true, false, true, true, placeHolder1)).render());
 
-container.className = 'container';
-container.appendChild((new Dropdown(items, autoComplete, multiSelect, useServer, showPhoto)).render());
+const placeHolder2 = 'autoComplete = false, multiSelect = true, useServer = false, showPhoto = false';
+container.appendChild((new Dropdown(items, false, true, false, false, placeHolder2)).render());
+
 
 document.body.appendChild(container);

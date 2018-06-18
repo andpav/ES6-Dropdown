@@ -37,12 +37,13 @@ export class ListItem {
 }
 
 export default class Dropdown {
-  constructor(items, autoComplete, multiSelect, useServer, showPhoto) {
+  constructor(items, autoComplete, multiSelect, useServer, showPhoto, placeholder) {
     this.autoComplete = autoComplete;
     this.multiSelect = multiSelect;
     this.useServer = useServer;
     this.showPhoto = showPhoto;
     this.selectedItem = null;
+    this.placeholder = placeholder;
 
     this.store = { pendingsRequestsCount : 0 };
 
@@ -140,7 +141,7 @@ export default class Dropdown {
   render(items) {
     this.input.type = 'text';
     this.input.className = 'dropdown__input';
-    this.input.placeholder = 'type here';
+    this.input.placeholder = this.placeholder;
 
     if (this.list) {
       this.input.onclick = () => this.list.classList.add('dropdown__list_shown');

@@ -1,8 +1,11 @@
 .dropdown {
-
+  display: inline-block;
+  height: 250px;
+  margin-right: 20px;
 }
 
 .dropdown__input {
+  width: 450px;
 }
 
 .dropdown__list {
