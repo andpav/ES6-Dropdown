@@ -4,10 +4,12 @@
 Object.assign = require('object-assign');
 
 // Promise polyfill
-if (typeof Promise === 'undefined') {
-  require('promise/lib/rejection-tracking').enable();
-  window.Promise = require('promise/lib/es6-extensions.js');
-}
+var Promise = require('es6-promise-polyfill').Promise;
+
+// if (typeof Promise === 'undefined') {
+//   require('promise/lib/rejection-tracking').enable();
+//   window.Promise = require('promise/lib/es6-extensions.js');
+// }
 
 // Fetch polyfill
 if (typeof window.fetch === 'undefined') {
