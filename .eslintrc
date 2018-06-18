@@ -1,0 +1,28 @@
+{
+  "plugins": [
+    "security"
+  ],
+  "extends": [
+    "airbnb",
+    "plugin:security/recommended"
+  ],
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "rules": {
+    "import/no-unresolved": "off",
+    "import/no-extraneous-dependencies": "off",
+    "no-param-reassign": "warn",
+    "no-plusplus": "warn",
+    "class-methods-use-this": "warn",
+    "max-len": [
+      "error",
+      120
+    ],
+    "import/extensions": [
+      "off"
+    ]
+  }
+}

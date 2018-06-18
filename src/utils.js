@@ -1,5 +1,6 @@
 /* find matches for dropdown filter */
 
+/* eslint-disable */
 // ex.: sinits -> ьштшеы
 const enToRuKeyboardTranslator = {
   'q':'й', 'w':'ц', 'e':'у', 'r':'к', 't':'е', 'y':'н', 'u':'г',
@@ -37,6 +38,7 @@ const ruToEnPronounceTranslator = {
   'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f',
   'х': 'h', 'ц': 'ts', 'ч': 'tch', 'ш': 'sh', 'щ': 'sch', 'ъ': '', 'ы': 'i', 'ь': '', 'э': 'e', 'ю': 'iy', 'я': 'ia',
 };
+/* eslint-enable */
 
 const findMatchRuCase = (array, text) => {
   const first = text.toLowerCase();
@@ -46,7 +48,7 @@ const findMatchRuCase = (array, text) => {
   const fifth = fourth.replace(/[A-z/,.;\'\]\[]/g, s => s == s.toLowerCase() ? enToRuPronounceTranslator[s] : enToRuPronounceTranslator[s.toLowerCase()].toUpperCase());
   const matchArray = [first, second, third, fourth, fifth];
 
-  return array.filter(item => Boolean(matchArray.find(matchString => ~item.name.toLowerCase().indexOf(matchString))));
+  return array.filter(item => Boolean(matchArray.find(matchString => item.name.toLowerCase().indexOf(matchString) > -1)));
 }
 
 const findMatchEnCase = (array, text) => {
@@ -57,7 +59,7 @@ const findMatchEnCase = (array, text) => {
   const fifth = fourth.replace(/[А-я/,.;\'\]\[]/g, s => s == s.toLowerCase() ? ruToEnPronounceTranslator[s] : ruToEnPronounceTranslator[s.toLowerCase()].toUpperCase());
   const matchArray = [first, second, third, fourth, fifth];
 
-  return array.filter(item => Boolean(matchArray.find(matchString => ~item.name.toLowerCase().indexOf(matchString))));
+  return array.filter(item => Boolean(matchArray.find(matchString => item.name.toLowerCase().indexOf(matchString) > -1)));
 }
 
 export const findMatch = (array, text) => {
