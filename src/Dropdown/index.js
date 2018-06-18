@@ -7,11 +7,17 @@ export class ListItem {
     this.node.className = 'list-item';
 
     this.node.onclick = () => {
-      multiSelect ? this.node.classList.toggle('list-item_selected') : selectItem(id);
-    }
+      if (multiSelect) {
+        this.node.classList.toggle('list-item_selected');
+
+        return;
+      }
+
+      selectItem(id);
+    };
 
     if (isSelected) {
-      this.node.classList.add('list-item_selected')
+      this.node.classList.add('list-item_selected');
     }
 
     if (showPhoto) {
@@ -47,7 +53,7 @@ export default class Dropdown {
     this.selectedItem = null;
     this.placeholder = placeholder;
 
-    this.store = { pendingsRequestsCount : 0 };
+    this.store = { pendingsRequestsCount: 0 };
 
     this.node = document.createElement('div');
     this.node.className = 'dropdown';
@@ -89,25 +95,27 @@ export default class Dropdown {
   }
 
   filterItems(e) {
-    const filteredItems = e.target.value ? findMatch(this.autoComplete, this.store.items, e.target.value) : this.store.items;
+    const filteredItems = e.target.value ?
+      findMatch(this.autoComplete, this.store.items, e.target.value) :
+      this.store.items;
 
     this.reRenderList(filteredItems);
 
     if (this.useServer) {
-      this.store.pendingsRequestsCount ++;
+      this.store.pendingsRequestsCount++;
 
       getData(e.target.value).then(serverItems => {
-        this.store.pendingsRequestsCount --;
+        this.store.pendingsRequestsCount--;
 
         /* так как мы не можем абортить промисы, просто не сэтим данные из устаревших */
-        return serverItems && !this.store.pendingsRequestsCount ? this.addItemsToStore(serverItems) : null
+        return serverItems && !this.store.pendingsRequestsCount ? this.addItemsToStore(serverItems) : null;
       });
     }
   }
 
   handleOutsideClick(e) {
     if (!this.node.contains(e.target)) {
-      this.list.classList.remove('dropdown__list_shown')
+      this.list.classList.remove('dropdown__list_shown');
     }
   }
 
@@ -116,7 +124,7 @@ export default class Dropdown {
       return;
     }
 
-    while(this.list.firstChild) {
+    while (this.list.firstChild) {
       this.list.removeChild(this.list.firstChild);
     }
 

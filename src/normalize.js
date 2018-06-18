@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // Object.assign polyfill
 Object.assign = require('object-assign');
 
@@ -9,7 +11,7 @@ if (typeof Promise === 'undefined') {
 
 // Fetch polyfill
 if (typeof window.fetch === 'undefined') {
-  require('whatwg-fetch');
+  window.fetch = require('whatwg-fetch');
 }
 
 if (!Array.prototype.find) {
@@ -58,3 +60,5 @@ if (Array.prototype.filter === undefined) {
     return rv;
   };
 }
+
+/* eslint-enable */
