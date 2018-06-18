@@ -22,7 +22,8 @@ export class ListItem {
       this.node.appendChild(photoElement);
     }
 
-    const nameElement = document.createElement('span');
+    const nameElement = document.createElement('div');
+    nameElement.className = 'list-item__name';
     nameElement.textContent = name;
 
     this.node.appendChild(nameElement);
