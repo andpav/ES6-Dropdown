@@ -11,7 +11,7 @@ if (typeof Promise === 'undefined') {
 
 // Fetch polyfill
 if (typeof window.fetch === 'undefined') {
-  window.fetch = require('whatwg-fetch');
+  require('whatwg-fetch');
 }
 
 if (!Array.prototype.find) {

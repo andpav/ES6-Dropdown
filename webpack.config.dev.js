@@ -7,10 +7,6 @@ const extractStyles = new ExtractTextPlugin({
 });
 
 module.exports = {
-  entry: {
-    normalize: ['./src/normalize.js'],
-    main: ['./src/index.js'],
-  },
   module: {
     rules: [
       {

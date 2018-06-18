@@ -1,4 +1,5 @@
 import './css/styles.css';
+import './normalize.js';
 import Dropdown from './Dropdown/index';
 
 let container = document.createElement('div');
