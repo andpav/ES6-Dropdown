@@ -126,12 +126,20 @@ export default class Dropdown {
       this.list.appendChild(wrapper);
     });
 
+    if (!this.list.hasChildNodes()) {
+      const nothingToShowMessage = document.createElement('div');
+      nothingToShowMessage.textContent = 'nothing to show';
+
+      this.list.appendChild(nothingToShowMessage);
+    }
+
     this.node.appendChild(this.list);
   }
 
   render(items) {
     this.input.type = 'text';
     this.input.className = 'dropdown__input';
+    this.input.placeholder = 'type here';
 
     if (this.list) {
       this.input.onclick = () => this.list.classList.add('dropdown__list_shown');
