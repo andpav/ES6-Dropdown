@@ -15,7 +15,10 @@ export class ListItem {
     }
 
     if (showPhoto) {
-      const photoElement = document.createElement('div');
+      const photoElement = document.createElement('img');
+      photoElement.alt = name;
+      photoElement.src = photo;
+      photoElement.className = 'list-item__photo';
       this.node.appendChild(photoElement);
     }
 

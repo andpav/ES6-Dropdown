@@ -1,14 +1,17 @@
 [
   {
     "id": "1",
-    "name": "Andrey Rogoznikov"
+    "name": "Andrey Rogoznikov",
+    "photo": "http://localhost:8082/public/1.jpg"
   },
   {
     "id": "2",
-    "name": "Andrey Rog"
+    "name": "Andrey Rog",
+    "photo": "http://localhost:8082/public/2.jpg"
   },
   {
     "id": "3",
-    "name": "someone else"
+    "name": "someone else",
+    "photo": "http://localhost:8082/public/3.jpg"
   }
 ]

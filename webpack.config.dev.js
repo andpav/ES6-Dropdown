@@ -34,6 +34,13 @@ module.exports = {
       {
         test: /\.html$/,
         use: [ 'raw-loader' ]
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        loader: 'file-loader',
+        options: {
+          limit: 8192,
+        },
       }
     ]
   },

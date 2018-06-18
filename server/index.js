@@ -2,11 +2,14 @@ const express = require('express')
 const cors = require('cors')
 const utils = require('./utils')
 const data = require('./data')
+const path = require('path');
 
 const app = express()
-const port = 3000
+const port = 8082
 
 app.use(cors())
+
+app.use('/public', express.static(path.resolve(__dirname, 'public')));
 
 app.get('/', (request, response) => {
   response.send('It\'s alive!')
@@ -15,8 +18,12 @@ app.get('/', (request, response) => {
 app.get('/data', (request, response) => {
   const text = request.query.text ? request.query.text : null;
 
-  if (!text || typeof text !== 'string') {
-    response.send('Invalid text!')
+  if (typeof text !== 'string') {
+    response.send([]);
+
+    // пригодится нормальная обработка ошибок
+
+    return;
   }
 
   response.send(utils.findMatch(data, text));

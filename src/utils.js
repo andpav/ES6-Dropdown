@@ -79,7 +79,7 @@ export const parseBody = (data) => {
 const parseResponse = (data) => {
   const httpCode = data.status;
 
-  if (httpCode < 200 || httpCode >= 300 || httpCode === 204) {
+  if (httpCode < 200 || httpCode >= 400 || httpCode === 204) {
     return null;
   }
 
@@ -93,5 +93,5 @@ const request = (url, method) => {
 };
 
 export const getData = (text) => {
-  return request(`http://localhost:3000/data?text=${text}`, 'GET');
+  return request(`http://localhost:8082/data?text=${text}`, 'GET');
 }

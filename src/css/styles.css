@@ -26,3 +26,8 @@
 .list-item_selected {
   opacity: 1;
 }
+
+.list-item__photo {
+  width: 40px;
+  height: 40px;
+}
