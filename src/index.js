@@ -33,5 +33,4 @@ container.appendChild((new Dropdown(items, true, false, true, true, placeHolder1
 const placeHolder2 = 'autoComplete = false, multiSelect = true, useServer = false, showPhoto = false';
 container.appendChild((new Dropdown(items, false, true, false, false, placeHolder2)).render());
 
-
 document.body.appendChild(container);

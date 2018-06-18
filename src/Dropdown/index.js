@@ -16,9 +16,11 @@ export class ListItem {
 
     if (showPhoto) {
       const photoElement = document.createElement('img');
+
       photoElement.alt = name;
       photoElement.src = photo;
       photoElement.className = 'list-item__photo';
+
       this.node.appendChild(photoElement);
     }
 
@@ -87,7 +89,7 @@ export default class Dropdown {
   }
 
   filterItems(e) {
-    const filteredItems = e.target.value ? findMatch(this.store.items, e.target.value) : this.store.items;
+    const filteredItems = e.target.value ? findMatch(this.autoComplete, this.store.items, e.target.value) : this.store.items;
 
     this.reRenderList(filteredItems);
 

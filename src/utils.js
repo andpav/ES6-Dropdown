@@ -62,10 +62,14 @@ const findMatchEnCase = (array, text) => {
   return array.filter(item => Boolean(matchArray.find(matchString => item.name.toLowerCase().indexOf(matchString) > -1)));
 }
 
-export const findMatch = (array, text) => {
-  const haveRuSymbols = /[а-я]/i.test(text);
+export const findMatch = (useSmartFilter, array, text) => {
+  if (useSmartFilter) {
+    const haveRuSymbols = /[а-я]/i.test(text);
 
-  return haveRuSymbols ? findMatchRuCase(array, text) : findMatchEnCase(array, text);
+    return haveRuSymbols ? findMatchRuCase(array, text) : findMatchEnCase(array, text);
+  }
+
+  return array.filter(item => item.name.indexOf(text) > -1);
 }
 
 export const parseBody = (data) => {
