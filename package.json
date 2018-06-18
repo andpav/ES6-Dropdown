@@ -12,6 +12,11 @@
   "keywords": [],
   "author": "andpav",
   "license": "MIT",
+  "dependencies": {
+    "object-assign": "^4.1.1",
+    "promise": "^8.0.1",
+    "whatwg-fetch": "^2.0.3"
+  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
