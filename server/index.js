@@ -7,7 +7,10 @@ const path = require('path');
 const app = express()
 const port = 8082
 
+// так как фронт отдается с вебпак дев сервера, нужно разрещить кросс-доменные запросы
 app.use(cors())
+
+// TODO: нужно бы разнести все по каталогам
 
 app.use('/public', express.static(path.resolve(__dirname, 'public')));
 
@@ -21,7 +24,7 @@ app.get('/data', (request, response) => {
   if (typeof text !== 'string') {
     response.send([]);
 
-    // пригодится нормальная обработка ошибок
+    // TODO: не помешает нормальная обработка разных входных данных
 
     return;
   }

@@ -55,7 +55,7 @@ const findMatchEnCase = (array, text) => {
   const fifth = fourth.replace(/[А-я/,.;\'\]\[]/g, s => s == s.toLowerCase() ? ruToEnPronounceTranslator[s] : ruToEnPronounceTranslator[s.toLowerCase()].toUpperCase());
   const matchArray = [first, second, third, fourth, fifth];
 
-  return array.filter(item => Boolean(matchArray.find(matchString => ~item.name.toLowerCase().indexOf(matchString))));
+  return array.filter(item => Boolean(matchArray.find(matchString => ~item.link.toLowerCase().indexOf(matchString))));
 }
 
 const findMatch = (array, text) => {
