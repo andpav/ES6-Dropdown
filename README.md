@@ -10,6 +10,11 @@ npm i
 npm run server
 ```
 
+## Producton build
+```bash
+npm run build
+```
+
 ## Run Dev Server (frontend)
 ```bash
 npm start
