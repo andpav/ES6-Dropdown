@@ -21,4 +21,4 @@ npm start
 ```
 and go to localhost:.... (see build log).
 
-You can set up your custom dropdown using ```bash src/index.js``` file.
+You can set up your custom dropdown using ```src/index.js``` file.
