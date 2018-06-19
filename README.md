@@ -1,18 +1,17 @@
 ES6 - dropdown
-### Version
-1.0.0
 
 ## Install Dependencies
 ```bash
-npm install
+npm i
 ```
 
-## Build
+## Run Server
 ```bash
-npm run build
+npm run server
 ```
 
-## Run Dev Server
+## Run Dev Server (frontend)
 ```bash
 npm start
 ```
+and go to localhost:8081
