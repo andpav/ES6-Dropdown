@@ -4,7 +4,7 @@
 Object.assign = require('object-assign');
 
 // Promise polyfill
-var Promise = require('es6-promise-polyfill').Promise;
+// var Promise = require('es6-promise-polyfill').Promise;
 
 // if (typeof Promise === 'undefined') {
 //   require('promise/lib/rejection-tracking').enable();
