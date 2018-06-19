@@ -133,7 +133,15 @@ export default class Dropdown {
     this.showingItems.map(item => {
       const wrapper = document.createElement('div');
 
-      wrapper.appendChild((new ListItem(item.id, item.name, item.photo, this.showPhoto, this.multiSelect, item.id === this.selectedItem, this.selectItem)).render());
+      wrapper.appendChild((new ListItem(
+        item.id,
+        item.name,
+        item.photo,
+        this.showPhoto,
+        this.multiSelect,
+        item.id === this.selectedItem,
+        this.selectItem,
+      )).render());
 
       this.list.appendChild(wrapper);
     });
@@ -171,7 +179,15 @@ export default class Dropdown {
     this.showingItems.map(item => {
       const wrapper = document.createElement('div');
 
-      wrapper.appendChild((new ListItem(item.id, item.name, item.photo, this.showPhoto, this.multiSelect, item.id === this.selectedItem, this.selectItem)).render());
+      wrapper.appendChild((new ListItem(
+        item.id,
+        item.name,
+        item.photo,
+        this.showPhoto,
+        this.multiSelect,
+        item.id === this.selectedItem,
+        this.selectItem,
+      )).render());
 
       this.list.appendChild(wrapper);
     });

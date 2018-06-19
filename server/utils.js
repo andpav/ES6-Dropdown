@@ -38,10 +38,10 @@ const ruToEnPronounceTranslator = {
 
 const findMatchRuCase = (array, text) => {
   const first = text.toLowerCase();
-  const second = first.replace(/[А-я/,.;\'\]\[]/g, s => s == s.toLowerCase() ? ruToEnPronounceTranslator[s] : ruToEnPronounceTranslator[s.toLowerCase()].toUpperCase());
-  const third = second.replace(/[A-z/,.;\'\]\[]/g, s => s == s.toLowerCase() ? enToRuKeyboardTranslator[s] : enToRuKeyboardTranslator[s.toLowerCase()].toUpperCase());
-  const fourth = first.replace(/[А-я/,.;\'\]\[]/g, s => s == s.toLowerCase() ? ruToEnKeyboardTranslator[s] : ruToEnKeyboardTranslator[s.toLowerCase()].toUpperCase());
-  const fifth = fourth.replace(/[A-z/,.;\'\]\[]/g, s => s == s.toLowerCase() ? enToRuPronounceTranslator[s] : enToRuPronounceTranslator[s.toLowerCase()].toUpperCase());
+  const second = first.replace(/[А-я/,.;\'\]\[]/g, s => s === s.toLowerCase() ? ruToEnPronounceTranslator[s] : ruToEnPronounceTranslator[s.toLowerCase()].toUpperCase());
+  const third = second.replace(/[A-z/,.;\'\]\[]/g, s => s === s.toLowerCase() ? enToRuKeyboardTranslator[s] : enToRuKeyboardTranslator[s.toLowerCase()].toUpperCase());
+  const fourth = first.replace(/[А-я/,.;\'\]\[]/g, s => s === s.toLowerCase() ? ruToEnKeyboardTranslator[s] : ruToEnKeyboardTranslator[s.toLowerCase()].toUpperCase());
+  const fifth = fourth.replace(/[A-z/,.;\'\]\[]/g, s => s === s.toLowerCase() ? enToRuPronounceTranslator[s] : enToRuPronounceTranslator[s.toLowerCase()].toUpperCase());
   const matchArray = [first, second, third, fourth, fifth];
 
   return array.filter(item => Boolean(matchArray.find(matchString => item.name.toLowerCase().indexOf(matchString) > -1)));
@@ -49,10 +49,10 @@ const findMatchRuCase = (array, text) => {
 
 const findMatchEnCase = (array, text) => {
   const first = text.toLowerCase();
-  const second = first.replace(/[A-z/,.;\'\]\[]/g, s => s == s.toLowerCase() ? enToRuPronounceTranslator[s] : enToRuPronounceTranslator[s.toLowerCase()].toUpperCase());
-  const third = second.replace(/[А-я/,.;\'\]\[]/g, s => s == s.toLowerCase() ? ruToEnKeyboardTranslator[s] : ruToEnKeyboardTranslator[s.toLowerCase()].toUpperCase());
-  const fourth = first.replace(/[A-z/,.;\'\]\[]/g, s => s == s.toLowerCase() ? enToRuKeyboardTranslator[s] : enToRuKeyboardTranslator[s.toLowerCase()].toUpperCase());
-  const fifth = fourth.replace(/[А-я/,.;\'\]\[]/g, s => s == s.toLowerCase() ? ruToEnPronounceTranslator[s] : ruToEnPronounceTranslator[s.toLowerCase()].toUpperCase());
+  const second = first.replace(/[A-z/,.;\'\]\[]/g, s => s === s.toLowerCase() ? enToRuPronounceTranslator[s] : enToRuPronounceTranslator[s.toLowerCase()].toUpperCase());
+  const third = second.replace(/[А-я/,.;\'\]\[]/g, s => s === s.toLowerCase() ? ruToEnKeyboardTranslator[s] : ruToEnKeyboardTranslator[s.toLowerCase()].toUpperCase());
+  const fourth = first.replace(/[A-z/,.;\'\]\[]/g, s => s === s.toLowerCase() ? enToRuKeyboardTranslator[s] : enToRuKeyboardTranslator[s.toLowerCase()].toUpperCase());
+  const fifth = fourth.replace(/[А-я/,.;\'\]\[]/g, s => s === s.toLowerCase() ? ruToEnPronounceTranslator[s] : ruToEnPronounceTranslator[s.toLowerCase()].toUpperCase());
   const matchArray = [first, second, third, fourth, fifth];
 
   return array.filter(item => Boolean(matchArray.find(matchString => item.link.toLowerCase().indexOf(matchString) > -1)));

@@ -2,29 +2,29 @@ import './css/styles.css';
 import './normalize.js';
 import Dropdown from './Dropdown/index';
 
-let container = document.createElement('div');
+const container = document.createElement('div');
 container.className = 'container';
 
 const items = [
   {
-    id : '1',
-    name : 'Vasily Slonikhin',
-    photo : 'src/assets/pic1.jpg',
+    id: '1',
+    name: 'Vasily Slonikhin',
+    photo: 'src/assets/pic1.jpg',
   },
   {
-    id : '2',
-    name : 'Ivan Molotov',
-    photo : 'src/assets/pic2.jpg',
+    id: '2',
+    name: 'Ivan Molotov',
+    photo: 'src/assets/pic2.jpg',
   },
   {
-    id : '3',
-    name : 'Boris the Blade',
-    photo : 'src/assets/pic3.jpg',
+    id: '3',
+    name: 'Boris the Blade',
+    photo: 'src/assets/pic3.jpg',
   },
   {
-    id : '4',
-    name : 'Andrey Rogozov',
-    photo : 'src/assets/pic4.jpg',
+    id: '4',
+    name: 'Andrey Rogozov',
+    photo: 'src/assets/pic4.jpg',
   },
 ];
 

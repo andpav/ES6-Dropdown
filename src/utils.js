@@ -38,14 +38,13 @@ const ruToEnPronounceTranslator = {
   'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f',
   'х': 'h', 'ц': 'ts', 'ч': 'tch', 'ш': 'sh', 'щ': 'sch', 'ъ': '', 'ы': 'i', 'ь': '', 'э': 'e', 'ю': 'iy', 'я': 'ia',
 };
-/* eslint-enable */
 
 const findMatchRuCase = (array, text) => {
   const first = text.toLowerCase();
-  const second = first.replace(/[А-я/,.;\'\]\[]/g, s => s == s.toLowerCase() ? ruToEnPronounceTranslator[s] : ruToEnPronounceTranslator[s.toLowerCase()].toUpperCase());
-  const third = second.replace(/[A-z/,.;\'\]\[]/g, s => s == s.toLowerCase() ? enToRuKeyboardTranslator[s] : enToRuKeyboardTranslator[s.toLowerCase()].toUpperCase());
-  const fourth = first.replace(/[А-я/,.;\'\]\[]/g, s => s == s.toLowerCase() ? ruToEnKeyboardTranslator[s] : ruToEnKeyboardTranslator[s.toLowerCase()].toUpperCase());
-  const fifth = fourth.replace(/[A-z/,.;\'\]\[]/g, s => s == s.toLowerCase() ? enToRuPronounceTranslator[s] : enToRuPronounceTranslator[s.toLowerCase()].toUpperCase());
+  const second = first.replace(/[А-я/,.;\'\]\[]/g, s => s === s.toLowerCase() ? ruToEnPronounceTranslator[s] : ruToEnPronounceTranslator[s.toLowerCase()].toUpperCase());
+  const third = second.replace(/[A-z/,.;\'\]\[]/g, s => s === s.toLowerCase() ? enToRuKeyboardTranslator[s] : enToRuKeyboardTranslator[s.toLowerCase()].toUpperCase());
+  const fourth = first.replace(/[А-я/,.;\'\]\[]/g, s => s === s.toLowerCase() ? ruToEnKeyboardTranslator[s] : ruToEnKeyboardTranslator[s.toLowerCase()].toUpperCase());
+  const fifth = fourth.replace(/[A-z/,.;\'\]\[]/g, s => s === s.toLowerCase() ? enToRuPronounceTranslator[s] : enToRuPronounceTranslator[s.toLowerCase()].toUpperCase());
   const matchArray = [first, second, third, fourth, fifth];
 
   return array.filter(item => Boolean(matchArray.find(matchString => item.name.toLowerCase().indexOf(matchString) > -1)));
@@ -53,14 +52,15 @@ const findMatchRuCase = (array, text) => {
 
 const findMatchEnCase = (array, text) => {
   const first = text.toLowerCase();
-  const second = first.replace(/[A-z/,.;\'\]\[]/g, s => s == s.toLowerCase() ? enToRuPronounceTranslator[s] : enToRuPronounceTranslator[s.toLowerCase()].toUpperCase());
-  const third = second.replace(/[А-я/,.;\'\]\[]/g, s => s == s.toLowerCase() ? ruToEnKeyboardTranslator[s] : ruToEnKeyboardTranslator[s.toLowerCase()].toUpperCase());
-  const fourth = first.replace(/[A-z/,.;\'\]\[]/g, s => s == s.toLowerCase() ? enToRuKeyboardTranslator[s] : enToRuKeyboardTranslator[s.toLowerCase()].toUpperCase());
-  const fifth = fourth.replace(/[А-я/,.;\'\]\[]/g, s => s == s.toLowerCase() ? ruToEnPronounceTranslator[s] : ruToEnPronounceTranslator[s.toLowerCase()].toUpperCase());
+  const second = first.replace(/[A-z/,.;\'\]\[]/g, s => s === s.toLowerCase() ? enToRuPronounceTranslator[s] : enToRuPronounceTranslator[s.toLowerCase()].toUpperCase());
+  const third = second.replace(/[А-я/,.;\'\]\[]/g, s => s === s.toLowerCase() ? ruToEnKeyboardTranslator[s] : ruToEnKeyboardTranslator[s.toLowerCase()].toUpperCase());
+  const fourth = first.replace(/[A-z/,.;\'\]\[]/g, s => s === s.toLowerCase() ? enToRuKeyboardTranslator[s] : enToRuKeyboardTranslator[s.toLowerCase()].toUpperCase());
+  const fifth = fourth.replace(/[А-я/,.;\'\]\[]/g, s => s === s.toLowerCase() ? ruToEnPronounceTranslator[s] : ruToEnPronounceTranslator[s.toLowerCase()].toUpperCase());
   const matchArray = [first, second, third, fourth, fifth];
 
   return array.filter(item => Boolean(matchArray.find(matchString => item.name.toLowerCase().indexOf(matchString) > -1)));
 }
+/* eslint-enable */
 
 export const findMatch = (useSmartFilter, array, text) => {
   if (useSmartFilter) {
@@ -70,7 +70,7 @@ export const findMatch = (useSmartFilter, array, text) => {
   }
 
   return array.filter(item => item.name.indexOf(text) > -1);
-}
+};
 
 export const parseBody = (data) => {
   if (typeof data === 'string') {
@@ -92,12 +92,10 @@ const parseResponse = (data) => {
   return data.json();
 };
 
-const request = (url, method) => {
-  return fetch(url, { method })
+const request = (url, method) =>
+  fetch(url, { method })
     .then(response => parseResponse(response))
     .then(body => (body ? parseBody(body) : null));
-};
 
-export const getData = (text) => {
-  return request(`http://localhost:8082/data?text=${text}`, 'GET');
-}
+export const getData = text =>
+  request(`http://localhost:8082/data?text=${text}`, 'GET');
