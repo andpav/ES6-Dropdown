@@ -14,4 +14,6 @@ npm run server
 ```bash
 npm start
 ```
-and go to localhost:8081
+and go to localhost:.... (see build log).
+
+You can set up your custom dropdown using ```bash src/index.js``` file.
