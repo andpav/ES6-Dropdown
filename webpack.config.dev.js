@@ -7,6 +7,7 @@ const extractStyles = new ExtractTextPlugin({
 });
 
 module.exports = {
+  entry: ['whatwg-fetch'],
   module: {
     rules: [
       {
