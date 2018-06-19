@@ -9,7 +9,6 @@ export default class Dropdown {
     this.useServer = useServer;
     this.showPhoto = showPhoto;
     this.selectedItem = null;
-    this.placeholder = placeholder;
 
     this.store = { pendingsRequestsCount: 0 };
 
@@ -17,39 +16,40 @@ export default class Dropdown {
     this.node.className = 'dropdown';
 
     this.input = document.createElement('input');
+    this.input.type = 'text';
+    this.input.className = 'dropdown__input';
+    this.input.placeholder = placeholder;
 
     this.render = this.render.bind(this);
-    this.reRenderList = this.reRenderList.bind(this);
+    this.renderList = this.renderList.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.selectItem = this.selectItem.bind(this);
     this.addItemsToStore = this.addItemsToStore.bind(this);
     this.setItemsToStore = this.setItemsToStore.bind(this);
     this.filterItems = this.filterItems.bind(this);
 
-    this.setItemsToStore(items);
-
     document.addEventListener('input', this.filterItems, false);
     document.addEventListener('click', this.handleOutsideClick, false);
 
-    this.render(items);
+    this.setItemsToStore(items);
   }
 
   addItemsToStore(items) {
     if (items && items.length) {
-      this.reRenderList(this.showingItems.concat(items));
+      this.renderList(this.showingItems.concat(items));
     }
   }
 
   setItemsToStore(items) {
     this.store.items = items;
 
-    this.reRenderList(items);
+    this.renderList(items);
   }
 
   selectItem(id) {
     this.selectedItem = id;
 
-    this.reRenderList(this.store.items);
+    this.renderList(this.store.items);
   }
 
   filterItems(e) {
@@ -57,7 +57,7 @@ export default class Dropdown {
       findMatch(this.autoComplete, this.store.items, e.target.value) :
       this.store.items;
 
-    this.reRenderList(filteredItems);
+    this.renderList(filteredItems);
 
     if (this.useServer) {
       this.store.pendingsRequestsCount++;
@@ -77,7 +77,7 @@ export default class Dropdown {
     }
   }
 
-  reRenderList(items) {
+  renderList(items) {
     if (!this.list) {
       return;
     }
@@ -87,6 +87,13 @@ export default class Dropdown {
     }
 
     this.showingItems = items || this.store.items;
+
+    /*
+    * Решение прокидывать знание о мультиселектности в сами айтемы у меня вызывает боль.
+    * Однако другой вариант - хранить в дропдауне при мультиселекте список всех выбранных айтемов,
+    * удалять их, перерисовки от каждого выбранного элемента (кейс мультиселекта) - это все плохо,
+    * хотя архитектурно более правильно.
+     */
 
     this.showingItems.map(item => {
       const wrapper = document.createElement('div');
@@ -114,44 +121,15 @@ export default class Dropdown {
     this.node.appendChild(this.list);
   }
 
-  render(items) {
-    this.input.type = 'text';
-    this.input.className = 'dropdown__input';
-    this.input.placeholder = this.placeholder;
-
-    if (this.list) {
-      this.input.onclick = () => this.list.classList.add('dropdown__list_shown');
-    }
-
-    /*
-    * Решение прокидывать знание о мультиселектности в сами айтемы у меня вызывает боль.
-    * Однако хранить в дропдауне при мультиселекте список всех выбранных айтемов, удалять их тоже так себе идея,
-    * хотя архитектурно более правильная. Может зафигачить какую-нибудь клевую структуру данных?
-     */
-
+  render() {
     this.list = document.createElement('div');
     this.list.className = 'dropdown__list';
 
-    this.showingItems = items || this.store.items;
-
-    this.showingItems.map(item => {
-      const wrapper = document.createElement('div');
-
-      wrapper.appendChild((new ListItem(
-        item.id,
-        item.name,
-        item.photo,
-        this.showPhoto,
-        this.multiSelect,
-        item.id === this.selectedItem,
-        this.selectItem,
-      )).render());
-
-      this.list.appendChild(wrapper);
-    });
+    this.input.onclick = () => this.list.classList.add('dropdown__list_shown');
 
     this.node.appendChild(this.input);
-    this.node.appendChild(this.list);
+
+    this.renderList(this.store.items);
 
     return this.node;
   }

@@ -1,18 +1,18 @@
 [
   {
-    "id": "1",
+    "id": "server1",
     "name": "Andrey Rogoznikov",
     "photo": "http://localhost:8082/public/1.jpg",
     "link": "rogoznikov"
   },
   {
-    "id": "2",
+    "id": "server2",
     "name": "Andrey Rog",
     "photo": "http://localhost:8082/public/2.jpg",
     "link": "andreyrog"
   },
   {
-    "id": "3",
+    "id": "server3",
     "name": "someone else",
     "photo": "http://localhost:8082/public/3.jpg",
     "link": "someoneelse"

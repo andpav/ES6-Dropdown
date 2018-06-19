@@ -29,9 +29,11 @@ const items = [
 ];
 
 const placeHolder1 = 'autoComplete = true, multiSelect = false, useServer = true, showPhoto = true';
-container.appendChild((new Dropdown(items, true, false, true, true, placeHolder1)).render());
+const dropdown1 = new Dropdown(items, true, false, true, true, placeHolder1);
+container.appendChild(dropdown1.render());
 
 const placeHolder2 = 'autoComplete = false, multiSelect = true, useServer = false, showPhoto = false';
-container.appendChild((new Dropdown(items, false, true, false, false, placeHolder2)).render());
+const dropdown2 = new Dropdown(items, false, true, false, false, placeHolder2);
+container.appendChild(dropdown2.render());
 
 document.body.appendChild(container);
