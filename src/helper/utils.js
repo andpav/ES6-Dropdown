@@ -72,7 +72,7 @@ export const findMatch = (useSmartFilter, array, text) => {
   return array.filter(item => item.name.indexOf(text) > -1);
 };
 
-export const parseBody = (data) => {
+const parseBody = (data) => {
   if (typeof data === 'string') {
     return null;
   }
