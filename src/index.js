@@ -1,4 +1,5 @@
 import './css/styles.css';
+import 'whatwg-fetch';
 import Dropdown from './Dropdown/index';
 
 const container = document.createElement('div');
