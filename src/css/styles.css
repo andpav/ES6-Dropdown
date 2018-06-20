@@ -46,3 +46,18 @@
   top: 25%;
   cursor: pointer;
 }
+
+.demo-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.demo-data-container {
+  display: inline-block;
+  margin-left: 50px;
+  vertical-align: top;
+}
+
+.demo-data-container__element {
+
+}
